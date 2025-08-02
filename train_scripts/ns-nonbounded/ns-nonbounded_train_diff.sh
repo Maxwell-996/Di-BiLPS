@@ -1,0 +1,19 @@
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 accelerate launch --main_process_port  0 ./training/train_diffusion.py \
+  --pretrained_model_name_or_path=./ns-nonbounded/diff \
+  --pretrained_vae_model_name_or_path=./ns-nonbounded/vae \
+  --pretrained_clip_model_name_or_path=./ns-nonbounded/rep_ali \
+  --dataset_name=ns-nonbounded \
+  --enable_xformers_memory_efficient_attention \
+  --pretrained_sheduler_model_name_or_path=./sampler \
+  --resolution=128 \
+  --train_batch_size=32 \
+  --gradient_accumulation_steps=2 \
+  --gradient_checkpointing \
+  --max_train_steps=30000 \
+  --learning_rate=1e-06 \
+  --lr_scheduler=constant \
+  --lr_warmup_steps=0 \
+  --checkpointing_steps=500 \
+  --output_dir=/data/ckpt_management_dir/my_diff_model \
+  --config_path=./configs/ns-nonbounded/ \
+  --use_irr_o
